@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GhostBits Encoder — EchoMind Security Tool
+GhostBits Encoder — 东方隐侠安全团队
 
 基于 Black Hat Asia 2026 Ghost Bits 编码绕过技术的专业级 payload 生成与检测工具。
 
@@ -284,7 +284,7 @@ def build_parser() -> argparse.ArgumentParser:
     """构建命令行参数解析器"""
     parser = argparse.ArgumentParser(
         prog="ghostbits",
-        description="GhostBits Encoder — Ghost Bits payload 生成与检测工具 (EchoMind)",
+        description="GhostBits Encoder — Ghost Bits payload 生成与检测工具 (东方隐侠)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent("""\
             Examples:
