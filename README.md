@@ -113,7 +113,56 @@ ghost-bits/
 ├── engine.py             # 核心编码/解码引擎
 ├── presets.py            # 漏洞预设定义
 ├── detector.py           # 检测与解码模块
-└── rules.py             # 防御规则生成
+├── rules.py              # 防御规则生成
+├── proxy.py              # HTTP 代理（扫描器集成）
+└── integrations.py       # Nuclei/Xray 模板转换 & 字典生成
+```
+
+## 扫描器集成
+
+### HTTP 代理模式（推荐）
+
+启动 Ghost Bits 编码代理，扫描器流量经过代理时自动编码攻击载荷：
+
+```bash
+# 启动代理
+python3 proxy.py -p 8888 -c gb2312 --mode selective
+
+# nuclei 使用代理
+nuclei -proxy http://127.0.0.1:8888 -t templates/ -u http://target.com
+
+# xray 使用代理
+xray webscan --proxy http://127.0.0.1:8888 --url http://target.com
+
+# sqlmap 使用代理
+sqlmap -u "http://target.com/?id=1" --proxy=http://127.0.0.1:8888
+
+# burpsuite: Settings → Network → Connections → Upstream Proxy → 127.0.0.1:8888
+```
+
+编码模式：
+- `selective`（默认）：只编码匹配攻击特征的参数，低误报
+- `aggressive`：对所有参数值编码，高覆盖
+- `full`：全部编码，极端模式
+
+### Nuclei 模板转换
+
+```bash
+# 转换单个模板
+python3 integrations.py nuclei -i template.yaml -o encoded.yaml
+
+# 批量转换目录
+python3 integrations.py nuclei -d nuclei-templates/cves/ -o encoded_templates/
+```
+
+### Fuzz 字典生成
+
+```bash
+# 编码字典
+python3 integrations.py wordlist -i sqli-payloads.txt -o sqli_ghostbits.txt
+
+# 生成多种编码变体（7 种组合）
+python3 integrations.py wordlist -i payloads.txt --variants -o variants/
 ```
 
 ## 注意事项
