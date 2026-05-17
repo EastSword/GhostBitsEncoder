@@ -165,11 +165,15 @@ class GhostBitsEngine:
         result.append(tail)
         return "".join(result)
 
-    def decode(self, encoded: str) -> str:
+    def decode(self, encoded: str, raw: bool = False) -> str:
         """
         解码 Ghost Bits 编码的字符串，还原实际执行的 payload
 
         对每个字符取低 8 位，模拟 Java (byte)char 截断行为
+
+        Args:
+            encoded: Ghost Bits 编码的字符串
+            raw: 如果为 True，控制字符直接输出；否则用 \\xXX 转义表示
         """
         result = []
         for char in encoded:
@@ -178,6 +182,8 @@ class GhostBitsEngine:
                 # 截断高位，只保留低 8 位
                 low_byte = code & 0xFF
                 if 0x20 <= low_byte <= 0x7E:
+                    result.append(chr(low_byte))
+                elif raw:
                     result.append(chr(low_byte))
                 else:
                     # 控制字符用转义表示
