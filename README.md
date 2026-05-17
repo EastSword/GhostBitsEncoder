@@ -1,6 +1,20 @@
-# GhostBits Encoder — EchoMind Internal Tool
+# GhostBits Encoder
 
 基于 Black Hat Asia 2026 披露的 Ghost Bits 编码绕过技术，构建的专业级 payload 生成与检测工具。
+
+## 演示
+
+### Payload 编码
+![Encode Demo](images/demo-encode.png)
+
+### 漏洞预设
+![Preset Demo](images/demo-preset.png)
+
+### Ghost Bits 检测
+![Detection Demo](images/demo-detect.png)
+
+### 预设列表
+![Presets List](images/demo-presets-list.png)
 
 ## 背景
 
