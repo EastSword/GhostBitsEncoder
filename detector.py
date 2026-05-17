@@ -122,8 +122,10 @@ class GhostBitsDetector:
                             findings.append(finding)
         except FileNotFoundError:
             print(f"[ERROR] File not found: {filepath}", file=sys.stderr)
+            return None
         except PermissionError:
             print(f"[ERROR] Permission denied: {filepath}", file=sys.stderr)
+            return None
 
         # 输出结果
         if format == "json":
