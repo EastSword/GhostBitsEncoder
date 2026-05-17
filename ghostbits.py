@@ -50,7 +50,7 @@ def cmd_encode(args):
                 print(f"[*] CVE: {preset.cve}", file=sys.stderr)
             print(f"[*] Notes: {preset.notes}", file=sys.stderr)
             print(file=sys.stderr)
-    elif args.payload:
+    elif args.payload is not None:
         payload = args.payload
         charset = args.charset or "gb2312"
         fmt = args.format or "raw"
@@ -137,7 +137,7 @@ def cmd_encode_batch(args):
 
 def cmd_decode(args):
     """解码命令"""
-    if args.payload:
+    if args.payload is not None:
         text = args.payload
     elif args.input:
         with open(args.input, "r", encoding="utf-8") as f:
@@ -154,7 +154,7 @@ def cmd_decode(args):
     text = re.sub(r"\\u([0-9A-Fa-f]{4})", lambda m: chr(int(m.group(1), 16)), text)
 
     engine = GhostBitsEngine()
-    decoded = engine.decode(text)
+    decoded = engine.decode(text, raw=getattr(args, 'raw', False))
 
     if args.json:
         analysis = engine.analyze(text)
@@ -171,6 +171,9 @@ def cmd_detect(args):
         # 扫描文件
         fmt = "json" if args.json else "text"
         findings = detector.scan_file(args.scan, format=fmt)
+        if findings is None:
+            # 文件错误
+            sys.exit(2)
         if args.json:
             pass  # scan_file 已输出 JSON
         elif not findings:
@@ -180,7 +183,7 @@ def cmd_detect(args):
     elif args.input:
         with open(args.input, "r", encoding="utf-8") as f:
             text = f.read()
-    elif args.payload:
+    elif args.payload is not None:
         text = args.payload
     elif not sys.stdin.isatty():
         text = sys.stdin.read()
@@ -322,6 +325,7 @@ def build_parser() -> argparse.ArgumentParser:
     dec = subparsers.add_parser("decode", help="解码 Ghost Bits 还原实际 payload")
     dec.add_argument("-p", "--payload", help="编码后的字符串")
     dec.add_argument("-i", "--input", help="输入文件")
+    dec.add_argument("--raw", action="store_true", help="原始字节输出（不转义控制字符）")
     dec.add_argument("--json", action="store_true", help="JSON 格式输出（含分析详情）")
 
     # --- detect ---
