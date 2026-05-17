@@ -34,7 +34,7 @@ class RuleGenerator:
             f'classtype:web-application-attack; '
             f'sid:{self.sid_base}; rev:1; '
             f'metadata:created_at {self.timestamp}, '
-            f'reference url github.com/echomind/ghost-bits;)'
+            f'reference url github.com/EastSword/GhostBitsEncoder;)'
         )
 
         # 规则 2: CJK 字符出现在 URL 路径中（非正常场景）
@@ -90,7 +90,7 @@ class RuleGenerator:
             # Ghost Bits Detection Rules for Snort/Suricata
             # Generated: {self.timestamp}
             # Reference: Black Hat Asia 2026 - Cast Attack: Ghost Bits
-            # Author: EchoMind Security Team
+            # Author: 东方隐侠安全团队
             # ============================================================
             #
             # 部署说明：
@@ -112,7 +112,7 @@ class RuleGenerator:
             # Ghost Bits Detection Rules for ModSecurity
             # Generated: {self.timestamp}
             # Reference: Black Hat Asia 2026 - Cast Attack: Ghost Bits
-            # Author: EchoMind Security Team
+            # Author: 东方隐侠安全团队
             # ============================================================
 
             # 规则 1: 检测 %uXXXX 高密度编码
@@ -224,7 +224,7 @@ class RuleGenerator:
              * Ghost Bits Detection YARA Rules
              * Generated: {self.timestamp}
              * Reference: Black Hat Asia 2026 - Cast Attack: Ghost Bits
-             * Author: EchoMind Security Team
+             * Author: 东方隐侠安全团队
              *
              * 用途：扫描 HTTP 请求日志、pcap 提取内容、Web 日志文件
              */
@@ -232,7 +232,7 @@ class RuleGenerator:
             rule GhostBits_PercentU_Encoding {{
                 meta:
                     description = "Detects Ghost Bits encoding using %uXXXX format"
-                    author = "EchoMind Security Team"
+                    author = "东方隐侠安全团队"
                     date = "{self.timestamp}"
                     severity = "high"
                     reference = "https://i.blackhat.com/Asia-26/Presentations/Asia-26-Bai-Cast-Attack-Ghost-Bits-4.23.pdf"
@@ -252,7 +252,7 @@ class RuleGenerator:
             rule GhostBits_UnicodeEscape_In_JSON {{
                 meta:
                     description = "Detects Ghost Bits in JSON payloads using \\\\uXXXX escapes"
-                    author = "EchoMind Security Team"
+                    author = "东方隐侠安全团队"
                     date = "{self.timestamp}"
                     severity = "high"
 
@@ -268,7 +268,7 @@ class RuleGenerator:
             rule GhostBits_PathTraversal {{
                 meta:
                     description = "Detects Ghost Bits encoded path traversal attempts"
-                    author = "EchoMind Security Team"
+                    author = "东方隐侠安全团队"
                     date = "{self.timestamp}"
                     severity = "critical"
 
