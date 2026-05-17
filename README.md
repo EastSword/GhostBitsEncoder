@@ -124,4 +124,4 @@ ghost-bits/
 
 ---
 
-*EchoMind Security Team · 2026-05*
+*东方隐侠安全团队 · 2026-05*
